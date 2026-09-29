@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-  getPublicProfile,
+  getPublicUser,
   getPublicProjects,
   getPublicEducation,
   getPublicCertifications,
@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get(
   "/profile",
-  getPublicProfile
+  getPublicUser
 );
 
 // ==========================================
@@ -25,6 +25,11 @@ router.get(
 
 router.get(
   "/projects",
+  getPublicProjects
+);
+
+router.get(
+  "/expertise",
   getPublicProjects
 );
 

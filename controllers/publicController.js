@@ -15,16 +15,11 @@ const PUBLIC_USER_ID = 3;
 // PUBLIC PROFILE
 // ==========================================
 
-const getPublicProfile = async (req, res) => {
+const getPublicUser = async (req, res) => {
   try {
-    const user = await User.findOne({
-      where: {
-        id: PUBLIC_USER_ID,
-      },
+    const user = await User.findByPk(PUBLIC_USER_ID, {
       attributes: [
-        "id",
         "name",
-        "email",
         "university",
         "graduationYear",
         "linkedinUrl",
@@ -34,9 +29,7 @@ const getPublicProfile = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({
-        message: "Profile not found",
-      });
+      return res.status(200).json(null);
     }
 
     res.status(200).json(user);
@@ -67,17 +60,17 @@ const getPublicProjects = async (req, res) => {
     res.status(200).json(projects);
 
   } catch (error) {
-    console.error("Public projects error:", error);
+    console.error("Public expertise error:", error);
 
     res.status(500).json({
-      message: "Failed to fetch public projects",
+      message: "Failed to fetch public expertise",
     });
   }
 };
 
 
 // ==========================================
-// PUBLIC EDUCATION
+// PUBLIC HISTORY
 // ==========================================
 
 const getPublicEducation = async (req, res) => {
@@ -92,10 +85,10 @@ const getPublicEducation = async (req, res) => {
     res.status(200).json(education);
 
   } catch (error) {
-    console.error("Public education error:", error);
+    console.error("Public history error:", error);
 
     res.status(500).json({
-      message: "Failed to fetch public education",
+      message: "Failed to fetch public history",
     });
   }
 };
@@ -164,7 +157,7 @@ const getPublicLeetCode = async (req, res) => {
 // ==========================================
 
 module.exports = {
-  getPublicProfile,
+  getPublicUser,
   getPublicProjects,
   getPublicEducation,
   getPublicCertifications,

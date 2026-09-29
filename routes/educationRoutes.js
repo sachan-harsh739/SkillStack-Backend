@@ -12,7 +12,7 @@ const adminMiddleware = require("../middleware/adminMiddleware");
 const router = express.Router();
 
 // ==========================================
-// ADMIN EDUCATION MANAGEMENT
+// ADMIN HISTORY MANAGEMENT
 // ==========================================
 
 // Get education

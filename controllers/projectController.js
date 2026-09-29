@@ -23,10 +23,10 @@ const getProjects = async (req, res) => {
         res.status(200).json(projects);
 
     } catch (error) {
-        console.error("Get projects error:", error);
+        console.error("Get expertise error:", error);
 
         res.status(500).json({
-            message: "Failed to fetch projects",
+            message: "Failed to fetch expertise",
             error: error.message,
         });
     }
@@ -49,7 +49,7 @@ const createProject = async (req, res) => {
 
         if (!title || !title.trim()) {
             return res.status(400).json({
-                message: "Project title is required",
+                message: "Expertise title is required",
             });
         }
 
@@ -71,15 +71,15 @@ const createProject = async (req, res) => {
         });
 
         res.status(201).json({
-            message: "Project created successfully",
+            message: "Expertise created successfully",
             project,
         });
 
     } catch (error) {
-        console.error("Create project error:", error);
+        console.error("Create expertise error:", error);
 
         res.status(500).json({
-            message: "Failed to create project",
+            message: "Failed to create expertise",
             error: error.message,
         });
     }
@@ -104,7 +104,7 @@ const updateProject = async (req, res) => {
 
         if (!title || !title.trim()) {
             return res.status(400).json({
-                message: "Project title is required",
+                message: "Expertise title is required",
             });
         }
 
@@ -117,7 +117,7 @@ const updateProject = async (req, res) => {
 
         if (!project) {
             return res.status(404).json({
-                message: "Project not found",
+                message: "Expertise not found",
             });
         }
 
@@ -142,15 +142,15 @@ const updateProject = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Project updated successfully",
+            message: "Expertise updated successfully",
             project,
         });
 
     } catch (error) {
-        console.error("Update project error:", error);
+        console.error("Update expertise error:", error);
 
         res.status(500).json({
-            message: "Failed to update project",
+            message: "Failed to update expertise",
             error: error.message,
         });
     }
@@ -174,21 +174,21 @@ const deleteProject = async (req, res) => {
 
         if (!project) {
             return res.status(404).json({
-                message: "Project not found",
+                message: "Expertise not found",
             });
         }
 
         await project.destroy();
 
         res.status(200).json({
-            message: "Project deleted successfully",
+            message: "Expertise deleted successfully",
         });
 
     } catch (error) {
-        console.error("Delete project error:", error);
+        console.error("Delete expertise error:", error);
 
         res.status(500).json({
-            message: "Failed to delete project",
+            message: "Failed to delete expertise",
             error: error.message,
         });
     }

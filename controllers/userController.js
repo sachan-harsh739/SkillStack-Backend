@@ -96,8 +96,51 @@ const createUser = async (req, res) => {
     }
 };
 
+const updateProfile = async (req, res) => {
+    try {
+        const {
+            githubUrl,
+            linkedinUrl,
+        } = req.body;
+
+        const user = await User.findByPk(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        if (githubUrl !== undefined) {
+            user.githubUrl = githubUrl;
+        }
+
+        if (linkedinUrl !== undefined) {
+            user.linkedinUrl = linkedinUrl;
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: {
+                id: user.id,
+                name: user.name,
+                githubUrl: user.githubUrl,
+                linkedinUrl: user.linkedinUrl,
+            },
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to update profile",
+            error: error.message,
+        });
+    }
+};
+
 module.exports = {
     getUsers,
     getUserById,
     createUser,
+    updateProfile,
 };

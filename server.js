@@ -20,7 +20,6 @@ require("./models/leetcodeModel");
 
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
-const profileRoutes = require("./routes/profileRoutes");
 
 const projectRoutes = require("./routes/projectRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -56,9 +55,8 @@ app.use("/api/users", userRoutes);
 
 app.use("/api/auth", authRoutes);
 
-app.use("/api/profile", profileRoutes);
-
 app.use("/api/projects", projectRoutes);
+app.use("/api/expertise", projectRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/education", educationRoutes);
 

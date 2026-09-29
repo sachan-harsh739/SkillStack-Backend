@@ -1,6 +1,7 @@
 const express = require("express");
 
 const adminMiddleware = require("../middleware/adminMiddleware");
+const { updateProfile } = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -21,6 +22,16 @@ router.get(
             },
         });
     }
+);
+
+// ==========================================
+// UPDATE PROFILE (GITHUB / LINKEDIN)
+// ==========================================
+
+router.put(
+    "/profile",
+    adminMiddleware,
+    updateProfile
 );
 
 module.exports = router;

@@ -15,10 +15,10 @@ const getEducation = async (req, res) => {
 
     res.status(200).json(education);
   } catch (error) {
-    console.error("Get education error:", error);
+    console.error("Get history error:", error);
 
     res.status(500).json({
-      message: "Failed to fetch education",
+      message: "Failed to fetch history",
       error: error.message,
     });
   }
@@ -50,7 +50,7 @@ const addEducation = async (req, res) => {
 
     if (!type || !allowedTypes.includes(type)) {
       return res.status(400).json({
-        message: "Invalid education type",
+        message: "Invalid history type",
       });
     }
 
@@ -67,7 +67,7 @@ const addEducation = async (req, res) => {
       });
     }
 
-    // Prevent duplicate education type
+    // Prevent duplicate history type
     const existing = await Education.findOne({
       where: {
         userId: req.user.id,
@@ -116,15 +116,15 @@ const addEducation = async (req, res) => {
     });
 
     res.status(201).json({
-      message: "Education added successfully",
+      message: "History added successfully",
       education,
     });
 
   } catch (error) {
-    console.error("Add education error:", error);
+    console.error("Add history error:", error);
 
     res.status(500).json({
-      message: "Failed to add education",
+      message: "Failed to add history",
       error: error.message,
     });
   }
@@ -148,7 +148,7 @@ const updateEducation = async (req, res) => {
 
     if (!education) {
       return res.status(404).json({
-        message: "Education not found",
+        message: "History not found",
       });
     }
 
@@ -172,7 +172,7 @@ const updateEducation = async (req, res) => {
 
       if (!allowedTypes.includes(type)) {
         return res.status(400).json({
-          message: "Invalid education type",
+          message: "Invalid history type",
         });
       }
 
@@ -224,15 +224,15 @@ const updateEducation = async (req, res) => {
     await education.save();
 
     res.status(200).json({
-      message: "Education updated successfully",
+      message: "History updated successfully",
       education,
     });
 
   } catch (error) {
-    console.error("Update education error:", error);
+    console.error("Update history error:", error);
 
     res.status(500).json({
-      message: "Failed to update education",
+      message: "Failed to update history",
       error: error.message,
     });
   }
@@ -256,21 +256,21 @@ const deleteEducation = async (req, res) => {
 
     if (!education) {
       return res.status(404).json({
-        message: "Education not found",
+        message: "History not found",
       });
     }
 
     await education.destroy();
 
     res.status(200).json({
-      message: "Education deleted successfully",
+      message: "History deleted successfully",
     });
 
   } catch (error) {
-    console.error("Delete education error:", error);
+    console.error("Delete history error:", error);
 
     res.status(500).json({
-      message: "Failed to delete education",
+      message: "Failed to delete history",
       error: error.message,
     });
   }
