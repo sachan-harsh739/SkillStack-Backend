@@ -48,6 +48,32 @@ app.get("/", (req, res) => {
 });
 
 // ==========================================
+// HEALTH CHECK
+// ==========================================
+
+const healthCheck = async (req, res) => {
+    let database = "connected";
+
+    try {
+        await sequelize.authenticate();
+    } catch (error) {
+        database = "disconnected";
+    }
+
+    const healthy = database === "connected";
+
+    res.status(healthy ? 200 : 503).json({
+        status: healthy ? "ok" : "error",
+        database,
+        uptime: Math.round(process.uptime()),
+        timestamp: new Date().toISOString(),
+    });
+};
+
+app.get("/health", healthCheck);
+app.get("/api/health", healthCheck);
+
+// ==========================================
 // API ROUTES
 // ==========================================
 
