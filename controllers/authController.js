@@ -75,8 +75,14 @@ const loginUser = async (req, res) => {
 
 
 // ==========================================
-// ADMIN LOGIN
+// ADMIN LOGIN (HARDCODED)
 // ==========================================
+
+// Admin credentials come from .env (ADMIN_EMAIL / ADMIN_PASSWORD),
+// not from the database.
+// Must match PUBLIC_USER_ID in publicController / projectController
+// so content saved by the admin shows on the public portfolio.
+const ADMIN_USER_ID = 3;
 
 const adminLogin = async (req, res) => {
     try {
@@ -88,40 +94,32 @@ const adminLogin = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({
-            where: { email },
-        });
+        if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+            return res.status(500).json({
+                message: "Admin credentials are not configured",
+            });
+        }
 
-        if (!user) {
+        // ======================================
+        // CHECK CREDENTIALS
+        // ======================================
+
+        if (
+            email.trim().toLowerCase() !==
+                process.env.ADMIN_EMAIL.toLowerCase() ||
+            password !== process.env.ADMIN_PASSWORD
+        ) {
             return res.status(401).json({
                 message: "Invalid admin credentials",
             });
         }
 
-        // ======================================
-        // CHECK ADMIN ROLE
-        // ======================================
-
-        if (user.role !== "admin") {
-            return res.status(403).json({
-                message: "Admin access denied",
-            });
-        }
-
-        // ======================================
-        // CHECK PASSWORD
-        // ======================================
-
-        const isPasswordValid = await bcrypt.compare(
-            password,
-            user.password
-        );
-
-        if (!isPasswordValid) {
-            return res.status(401).json({
-                message: "Invalid admin credentials",
-            });
-        }
+        const user = {
+            id: ADMIN_USER_ID,
+            name: process.env.ADMIN_NAME || "Admin",
+            email: process.env.ADMIN_EMAIL,
+            role: "admin",
+        };
 
         // ======================================
         // CREATE ADMIN JWT
