@@ -129,4 +129,12 @@ const startServer = async () => {
     }
 };
 
-startServer();
+// Start listening only when run directly (node server.js / node index.js).
+// On Netlify, netlify/functions/api.js imports the app instead.
+const entry = require.main && require.main.filename;
+
+if (entry === __filename || entry === require("path").join(__dirname, "index.js")) {
+    startServer();
+}
+
+module.exports = { app };

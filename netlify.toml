@@ -1,0 +1,17 @@
+# Runs the Express backend as a Netlify Function
+[build]
+  command = "npm install"
+  publish = "netlify/static"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # Sequelize loads its DB driver dynamically — keep these unbundled
+  external_node_modules = ["sequelize", "pg", "pg-hstore"]
+
+# Send every request to the API function
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
